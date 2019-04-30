@@ -1,0 +1,30 @@
+{
+  "name": "nodecrud",
+  "version": "1.0.0",
+  "description": "crud with nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eniofilipe/node_crud.git"
+  },
+  "keywords": [
+    "node",
+    "crud"
+  ],
+  "author": "Enio Filipe M Souza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eniofilipe/node_crud/issues"
+  },
+  "homepage": "https://github.com/eniofilipe/node_crud#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
+}
