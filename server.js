@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const con = require('./conBd')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -15,6 +16,8 @@ app.get('/',(req,res) => {
 app.set('view engine','ejs')
 
 app.post('/show', (req, res) => {
-    console.log(req.body)
+    console.log('Nome: '+req.body.name)
+    console.log('Idade: '+req.body.age)
+    con.inserir(req.body.name,req.body.age)
 })
 
