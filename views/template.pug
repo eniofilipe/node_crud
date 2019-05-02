@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    link( rel = 'stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    
+    style(type='text/css').
+        .table-wrapper {
+            margin-top: 50px;
+        }
+    
+  body
+    div(class='page-wrapper')
+        nav(class='navbar navbar-light bg-light')
+            span(class='navbar-brand mb-0 h1') #{title}
+
+    block content
+    br
+    hr
+    footer
+        p Copyright &copy; 2017
+    

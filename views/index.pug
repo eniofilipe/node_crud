@@ -1,0 +1,35 @@
+extends template
+
+block content
+
+    h1.display-1 Registro
+    form(action='/', method='post')
+        div.input-group
+            div.input-group-prepend
+                span.input-group-text Nome e Idade
+            
+            input(type='text', placeholder='Nome', name='name', class='form-control')
+            input(type='text', placehoder='Idade', name='age', class='form-control')
+            button(type="submit", class='form-control') Enviar
+    div(class='table-wrapper')
+        case pessoas
+            when 0
+                p.text-center Não foram achadas pessoas
+            default
+                table.table.table-hovered
+                    thead.thead-dark
+                        tr
+                            th(scope='col') ID
+                            th(scope='col') Nome
+                            th(scope='col') Idade
+                            th(scope='col') Ação
+                    each nomes in pessoas
+                        tr
+                            th(scope='row') #{nomes.id}
+                            td(scope='row') #{nomes.nome}
+                            td(scope='row') #{nomes.idade}
+                            td
+                                a.btn.btn-sm.btn-success(href='/edit/<%= player.id %>', target='_blank', rel='noopener') Edit
+                                a.btn.btn-sm.btn-danger(href='/delete/<%= player.id %>') Delete
+
+    

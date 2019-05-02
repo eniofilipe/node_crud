@@ -12,6 +12,8 @@ connection.connect(function(err){
   console.log('conectou!');
 });
 
+global.con = connection;
+
 exports.inserir = function(nome, idade){
     const sql = "INSERT INTO nomes(nome, idade) VALUES ?";
     const values = [[nome,idade]];
@@ -23,3 +25,4 @@ exports.inserir = function(nome, idade){
         
     });
 }
+
