@@ -16,9 +16,10 @@ exports.inserir = function(nome, idade){
     const sql = "INSERT INTO nomes(nome, idade) VALUES ?";
     const values = [[nome,idade]];
 
+   
     connection.query(sql, [values], function(error, results, fields){
         if(error) return console.log(error);
         console.log('Adicionou registro!');
-        connection.end();
+        
     });
 }
