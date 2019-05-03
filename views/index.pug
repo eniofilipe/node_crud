@@ -3,7 +3,7 @@ extends template
 block content
 
     h1.display-1 Registro
-    form(action='/', method='post')
+    form(action='/add', method='post')
         div.input-group
             div.input-group-prepend
                 span.input-group-text Nome e Idade
@@ -30,6 +30,6 @@ block content
                             td(scope='row') #{nomes.idade}
                             td
                                 a.btn.btn-sm.btn-success(href='/edit/<%= player.id %>', target='_blank', rel='noopener') Edit
-                                a.btn.btn-sm.btn-danger(href='/delete/<%= player.id %>') Delete
+                                a.btn.btn-sm.btn-danger(href='/delete/' + nomes.id) Delete
 
     

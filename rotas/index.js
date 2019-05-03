@@ -5,7 +5,7 @@ module.exports = {
         // execute query
         con.query(query, (err, result) => {
             if (err) {
-                res.redirect('/');
+                res.redirect('/home');
             }
             res.render('index', {
                 title: 'Crud Nodejs with mySql | View Peoples'

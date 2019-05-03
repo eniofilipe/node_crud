@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+    
+        script(src='/bower_components/jquery/dist/jquery.js')
+        script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+        link( rel = 'stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+   
+    body.text-center
+        div.container
+            div.row.align-items-center
+                div.col
+                    form(action='/auth', method='POST')
+                       div.input-group.mb-3
+                            input(type='text', name='username', class='form-control', placeholder='Usuário',required,autofocus)
+                            input(type='password', name='password', class='form-control', placeholder='Senha',required)
+                            button(type='submit', class='form-control') Login
+                
+                                
