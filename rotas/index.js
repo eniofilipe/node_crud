@@ -9,7 +9,8 @@ module.exports = {
             }
             res.render('index', {
                 title: 'Crud Nodejs with mySql | View Peoples'
-                ,pessoas: result
+                ,pessoas: result,
+                usuario: req.session.username
             });
         });
     },

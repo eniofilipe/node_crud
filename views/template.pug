@@ -18,6 +18,10 @@ html
           div(class='page-wrapper')
             nav(class='navbar navbar-expand-lg navbar-dark bg-dark')
               span(class='navbar-brand mb-0 h1') #{title}
+              div.collapse.navbar-collapse
+                span(class='navbar-text') #{usuario}
+                  form(action='/logout', method='get')
+                    button(type='submit', class='form-control' ) Sair
       div.row
         div.col-2.bg-dark.text-white
           h5 aqui vai ter alguma coisa

@@ -6,6 +6,8 @@ const connection = require('./bdConnection');
 const {getHomePage} = require('./rotas/index');
 const {addPessoa, deletePessoa} = require('./rotas/pessoa');
 var session = require('express-session');
+const cookieParser = require('cookie-parser');
+
 
 app.use(session({
 	secret: 'secret',
@@ -56,6 +58,11 @@ app.post('/auth', function(request, response) {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/logout', function (req, res) {
+	req.session.destroy();
+	res.redirect('/');
+});	
 
 app.get('/home', getHomePage);
 app.post('/add', addPessoa)

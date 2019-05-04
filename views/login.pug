@@ -5,15 +5,19 @@ html
         script(src='/bower_components/jquery/dist/jquery.js')
         script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
         link( rel = 'stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
-   
-    body.text-center
-        div.container
-            div.row.align-items-center
-                div.col
-                    form(action='/auth', method='POST')
-                       div.input-group.mb-3
-                            input(type='text', name='username', class='form-control', placeholder='Usuário',required,autofocus)
-                            input(type='password', name='password', class='form-control', placeholder='Senha',required)
-                            button(type='submit', class='form-control') Login
+        link( rel = 'stylesheet', type='text/css', href='/css/global.css')
+    body
+        div.container-fluid.bg
+            div.row.justify-content-center
+                div.col-12.col-sm-6.col-md-3.center
+                        
+                        form(class='form-container' action='/auth', method='POST')
+                            h2 Login
+                            div.form-group.mb-3
+                                input(type='text', name='username', class='form-control form-control-lg', placeholder='Usuário',required,autofocus)
+                            div.form-group.mb-3    
+                                input(type='password', name='password', class='form-control form-control-lg', placeholder='Senha',required)
+                            div.form-group   
+                                button(type='submit', class='form-control') Login
                 
                                 
