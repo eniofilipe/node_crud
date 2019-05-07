@@ -11,7 +11,7 @@ html
             div.row.justify-content-center
                 div.col-12.col-sm-6.col-md-3.center
                         
-                        form(class='form-container' action='/auth', method='POST')
+                        form(class='form-container' action='/users/login', method='POST')
                             h2 Login
                             div.form-group.mb-3
                                 input(type='text', name='username', class='form-control form-control-lg', placeholder='Usuário',required,autofocus)
@@ -19,5 +19,4 @@ html
                                 input(type='password', name='password', class='form-control form-control-lg', placeholder='Senha',required)
                             div.form-group   
                                 button(type='submit', class='form-control') Login
-                
-                                
+                            include ./messages/messages.pug

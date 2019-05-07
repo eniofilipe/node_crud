@@ -11,10 +11,11 @@ block content
             input(type='text', placeholder='Nome', name='name', class='form-control')
             input(type='text', placehoder='Idade', name='age', class='form-control')
             button(type="submit", class='form-control') Enviar
+    include ./messages/messages.pug   
     div(class='table-wrapper')
         case pessoas
             when 0
-                p.text-center Não foram achadas pessoas
+                p.text-center Não achamos ninguém
             default
                 table.table.table-hovered
                     thead.thead-dark
@@ -31,5 +32,6 @@ block content
                             td
                                 a.btn.btn-sm.btn-success(href='/edit/<%= player.id %>', target='_blank', rel='noopener') Edit
                                 a.btn.btn-sm.btn-danger(href='/delete/' + nomes.id) Delete
-
+                    else
+                        p.text-center não achamos nada
     

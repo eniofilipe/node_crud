@@ -1,76 +1,78 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
 const path = require('path');
 const connection = require('./bdConnection');
-const {getHomePage} = require('./rotas/index');
+const {getDash} = require('./rotas/dashboard');
 const {addPessoa, deletePessoa} = require('./rotas/pessoa');
 var session = require('express-session');
-const cookieParser = require('cookie-parser');
+const flash = require('connect-flash')
+const passport = require('passport');
 
+const app = express();
 
+//Passport config
+require('./config/passport')(passport);
+
+app.set('view engine','pug');
+
+//body parser
+app.use(bodyParser.urlencoded({ extended: true}));
+
+// Express Session
 app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
 }));
 
-app.use(bodyParser.urlencoded({ extended: true}));
+//Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.set('views' , path.join(__dirname, 'views'));
+//Connect Flash
+app.use(flash());
 
-app.set('view engine','pug');
+//Global Vars
+app.use((req, res, next) =>{
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.condErro = false;
+	res.locals.error = req.flash('error');
+	next();
+})
+global.userDisplay = '';
 
-app.use(bodyParser.json());
-
-app.listen(3000,function() {
-    console.log('server running on port 3000')
-});
-
-
-app.get('/', function(request, response) {
-	response.render('login.pug');
-});
-
-app.post('/auth', function(request, response) {
-	const username = request.body.username;
-    const password = request.body.password;
-    
-    let authQuery = 'SELECT * FROM usuario WHERE username = ? AND senha = ?';
-    const values = [[username,password]];
-
-	if (username && password) {
-		con.query(authQuery, [username,password], function(error, results, fields) {
-            console.log(results.length);
-            if (results.length > 0) {
-				request.session.loggedin = true;
-				request.session.username = username;
-				response.redirect('/home');
-			} else {
-				response.send('Usuário ou senha incorretos');
-			}			
-			response.end();
-		});
-	} else {
-		response.send('Entre com usuário e senha!');
-		response.end();
-	}
-});
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('views' , path.join(__dirname, 'views'));
 
-app.get('/logout', function (req, res) {
-	req.session.destroy();
-	res.redirect('/');
-});	
 
-app.get('/home', getHomePage);
-app.post('/add', addPessoa)
-app.get('/delete/:id', deletePessoa);
+app.use('/', require('./rotas/index.js'));
+app.use('/users', require('./rotas/users.js'));
+app.use('/dashboard', require('./rotas/dashboard.js'));
+//app.post('/auth', function(request, response) {
+//	const username = request.body.username;
+//    const password = request.body.password;
+//    
+//    
+//});
+
+
+
+//app.get('/logout', function (req, res) {
+//	req.session.destroy();
+//	res.redirect('/');
+//});	
+
+//app.get('/dash', getDash);
+//app.post('/add', addPessoa)
+//app.get('/delete/:id', deletePessoa);
 //app.get('',(req,res) => {
 //   res.render('index')
 //});
 
 
-
+app.listen(3000,function() {
+    console.log('server running on port 3000')
+});
 

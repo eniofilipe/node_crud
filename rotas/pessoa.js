@@ -13,7 +13,8 @@ module.exports = {
                 return console.log(error)
             }else{
                 console.log('Adicionou registro!');
-                res.redirect('/home');
+                req.flash('success_msg', 'Registro adicionado com sucesso!');
+                res.redirect('/dashboard/home');
             }
        });
 
@@ -29,7 +30,7 @@ module.exports = {
                 return res.status(500).send(err);
             }
             console.log('Removeu registro '+ pessoaId);
-            res.redirect('/home');
+            res.redirect('/dashboard/home');
         })
 
     }

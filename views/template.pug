@@ -20,11 +20,14 @@ html
               span(class='navbar-brand mb-0 h1') #{title}
               div.collapse.navbar-collapse
                 span(class='navbar-text') #{usuario}
-                  form(action='/logout', method='get')
+                  form(action='/users/logout', method='get')
                     button(type='submit', class='form-control' ) Sair
       div.row
         div.col-2.bg-dark.text-white
-          h5 aqui vai ter alguma coisa
+          h2 Menu
+          br
+          form(action='/users/register', method='get')
+                    button(type='submit', class='form-control' ) Registrar usuário
         div.col-10
           block content 
           br
