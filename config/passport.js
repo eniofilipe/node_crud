@@ -16,20 +16,21 @@ module.exports = function(passport){
                 
                 if(results.length>0){
 
-                    if(password==resultado.senha){
-                        userDisplay = resultado.username;
+                    /*if(password==resultado.senha){
+                        
                         return done(null, resultado);
                     }else{
                         return done(null, false, {message: 'Senha incorreta!'});
-                    }
-                    /*bcrypt.compare(password, resultado.senha, (err, isMatch)=> {
+                    }*/
+                    bcrypt.compare(password, resultado.senha, (err, isMatch)=> {
                         if(err) throw err;
                         if(isMatch){
+                            userDisplay = resultado.username;
                             return done(null,resultado);
                         } else {
                             return done(null, false, {message: 'Senha incorreta!'});
                         }
-                    });*/
+                    });
 
                 }else{
                     return done(null, false, { message: 'Email não registrado!'});

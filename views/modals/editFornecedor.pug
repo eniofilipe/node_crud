@@ -1,0 +1,44 @@
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        form(action="/fornecedor/update", method="post")
+            .modal-header
+                h3 Cliente
+                button(type='button', class='close', data-dismiss='modal') &times;
+                include ../messages/messages.pug 
+            .modal-body
+                .container-fluid
+                    .row   
+                        .form-group.col-sm-2.my-0
+                            label.col-form-label ID
+                            input(type='text', class='form-control', value=''+fornecedor.id , name='ID', readonly)
+                        .form-group.col-sm-10.my-0
+                            label.col-form-label Empresa
+                            input(type='text', class='form-control', value=''+fornecedor.empresa, name='nome')
+                    .row    
+                        .form-group.col-sm-12.my-0
+                            label.col-form-label Endereço  
+                            input(type='text', class='form-control',value=''+fornecedor.endereco, name='endereco')
+                    .row    
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Cidade 
+                            input(type='text', class='form-control',value=''+fornecedor.cidade, name='cidade')
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Estado  
+                            input(type='text', class='form-control',value=''+fornecedor.uf, name='estado')
+                    .row
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label CNPJ
+                            input(type='text', class='form-control',value=''+fornecedor.cnpj, name='cpf')
+                    .row
+                        .form-group.col-sm-6.px-6.my-0
+                            label.col-form-label Telefone  
+                            input(type='text', class='form-control',value=''+fornecedor.telefone, name='telRes')
+                        .form-group.col-sm-6.px-6.my-0
+                            label.col-form-label Email 
+                            input(type='text', class='form-control',value=''+fornecedor.email, name='telCel')
+                    
+            .modal-footer
+                button(type='submit', class='form-control btn btn-success ml-3 mr-sm-1') Salvar 
+                button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close
+            
+               

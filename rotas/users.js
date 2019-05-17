@@ -3,11 +3,14 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
-const { forwardAuthenticated } = require('../config/auth');
+const {ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 router.get('/login', forwardAuthenticated, (req,res) => res.render('login'));
 
-router.get('/register', forwardAuthenticated, (req, res) => res.render('registroUsuario'));
+router.get('/register', ensureAuthenticated, (req, res) => res.render('register', {
+    title: 'CRUD ',
+    usuario: userDisplay
+}));
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
@@ -19,13 +22,13 @@ router.post('/login', (req, res, next) => {
 
 router.post('/register', (req, res ) =>{
     
-    let registerQuery = 'INSERT INTO usuario(username, email, senha) VALUES ?';
+    let registerQuery = 'INSERT INTO usuario(username, email, senha) VALUE ?';
     const {username, email, password} = req.body;
 
-    bcrypt.genSalt(10,(err,salt) => {
+    bcrypt.genSalt(5,(err,salt) => {
         bcrypt.hash(password, salt, (err, hash)=> {
             if(err) throw err;
-            const values = [username,email,hash];
+            const values = [[username,email,hash]];
             con.query(registerQuery, [values], function(error, result, fields){
                 if(error){
                     return console.log(error)

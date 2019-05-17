@@ -11,9 +11,10 @@ router.get('/home', ensureAuthenticated, (req, res) => {
         if (err) {
             res.redirect('/users/login');
         }
+        
         res.render('dashboard', {
-            title: 'Crud Nodejs with mySql | View Peoples',
             pessoas: result,
+            title: 'CRUD ',
             usuario: userDisplay
         });
     });       

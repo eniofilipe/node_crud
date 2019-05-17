@@ -1,0 +1,32 @@
+
+
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        form(action="/produtos/register", method="post")
+            .modal-header
+                h3 Produto
+                button(type='button', class='close', data-dismiss='modal') &times;
+                include ../messages/messages.pug 
+            .modal-body
+                .container-fluid
+                    .row   
+                        .form-group.col-sm-2.my-0
+                            label.col-form-label ID
+                            input(type='text', class='form-control', name='ID', value = produtos.id, readonly)
+                        .form-group.col-sm-10.my-0
+                            label.col-form-label Nome
+                            input(type='text', class='form-control', name='nome', value = produtos.nome, readonly)
+                    .row    
+                        .form-group.col-sm-12.my-0
+                            label.col-form-label Descrição  
+                            input(type='text', class='form-control',name='descricao',value = produtos.descricao ,readonly)
+                    .row    
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Preço  
+                            input(type='text', class='form-control',name='preco',value = produtos.preco,readonly)
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Quantidade 
+                            input(type='text', class='form-control',name='quantidade',value = produtos.quantidade, readonly)
+                        
+            .modal-footer
+                button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close

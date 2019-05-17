@@ -2,36 +2,79 @@ doctype html
 html
   head
     
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    link(rel='stylesheet',href='https://use.fontawesome.com/releases/v5.8.2/css/all.css',integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay',crossorigin='anonymous')
     script(src='/bower_components/jquery/dist/jquery.js')
     script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
     link( rel = 'stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link( rel = 'stylesheet', href='/bower_components/bootstrap/dist/css/all.css')
+    link( rel = 'stylesheet', href='/css/global.css')
+    link( rel = 'stylesheet', href='/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')
+
+    script(src='/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js')
+    script(src='/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js')
+
+    
+          
+      
     
     style(type='text/css').
         .table-wrapper {
             margin-top: 50px;
         }
+
+    
     
   body
-    div.container-fluid
+       
+            
+    nav(class='navbar navbar-dark fixed-top bg-dark flax-md-nowrap p-1 shadow ')
+      a(class='navbar-brand col-sm-3 col-md-2 mr-0 text-light' ) #{title}
+      ul.navbar-nav.px-3
+        li.nav-item.text-nowrap
+          form(class='form-inline  ', action='/users/logout', method='get')
+            p(class='navbar-brand my-2 my-lg-0 mx-3 h4') #{usuario}
+            button(type='submit', class='btn btn-light  ' ) Sair
+    div.container-fluid  
       div.row
-        div.col.bg-dark
-          div(class='page-wrapper')
-            nav(class='navbar navbar-expand-lg navbar-dark bg-dark')
-              span(class='navbar-brand mb-0 h1') #{title}
-              div.collapse.navbar-collapse
-                span(class='navbar-text') #{usuario}
-                  form(action='/users/logout', method='get')
-                    button(type='submit', class='form-control' ) Sair
-      div.row
-        div.col-2.bg-dark.text-white
-          h2 Menu
-          br
-          form(action='/users/register', method='get')
-                    button(type='submit', class='form-control' ) Registrar usuário
-        div.col-10
+        nav.col-md-2.bg-light.sidebar
+          div
+            ul.nav.flex-column
+              li.nav-item
+                form(action='/clients/view', method='get')
+                  button(type='submit', class='form-control btn btn-outline-dark border-0  mx-o rounded-0  ' )
+                    i(class='fa fa-users fa-pull-left', aria-hidden='true') 
+                    |    Clientes
+              li.nav-item
+                form(action='/fornecedor/view', method='get')
+                  button(type='submit', class='form-control btn btn-outline-dark border-0 btn-block mx-o rounded-0 ' ) 
+                    i(class='fas fa-truck fa-pull-left') 
+                    |    Fornecedores
+              li.nav-item
+                form(action='/users/register', method='get')
+                  button(type='submit', class='form-control btn btn-outline-dark border-0 btn-block mx-o rounded-0 ' ) 
+                    i(class='fas fa-people-carry fa-pull-left') 
+                    |    Funcionários
+              li.nav-item
+                form(action='/produtos/view', method='get')
+                  button(type='submit', class='form-control btn btn-outline-dark border-0  btn-block mx-o rounded-0 ' ) 
+                    i(class='fas fa-boxes fa-pull-left') 
+                    |    Produtos
+              li.nav-item
+                form(action='/users/register', method='get')
+                  button(type='submit', class='form-control btn btn-outline-dark border-0 btn-block mx-o rounded-0 ' ) 
+                    i(class='fas fa-clipboard-list fa-pull-left h5') 
+                    |    Vendas   
+              li.nav-item.text-center 
+                span.mb-0 2019 (c) Ênio Filipe             
+              
+            //li.nav-item
+                h5:button(class='btn collapsed btn-dark btn-lg btn-block mx-o rounded-0 text-left', type='button', data-toggle='collapse', data-target='#collapseTwo') Button toggle
+                  i.fa.fa-fw.fa-angle-down.pull-right
+                div(id='collapseTwo', class='collapse')
+                  form(action='/users/register', method='get')
+                    button(type='submit', class='form-control btn-secondary mx-0 my-0 rounded-0' ) Botao                                         
+        main(role='main', class='col-md-9 ml-sm-auto col-lg-10 px-4')
           block content 
-          br
-          hr
-      footer.bg-dark.text-white
-          p Copyright &copy; 2017
+      
     

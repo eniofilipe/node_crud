@@ -1,0 +1,74 @@
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        form(action="/clients/register", method="post")
+            .modal-header
+                h3 Cliente
+                button(type='button', class='close', data-dismiss='modal') &times;
+                include ../messages/messages.pug 
+            .modal-body
+                .container-fluid
+                    .row   
+                        .form-group.col-sm-2.my-0
+                            label.col-form-label ID
+                            input(type='text', class='form-control', placeholder=''+clientes.id , name='ID', readonly)
+                        .form-group.col-sm-10.my-0
+                            label.col-form-label Nome
+                            input(type='text', class='form-control', placeholder=''+clientes.nome, name='nome', readonly, id='inputNome')
+                    .row    
+                        .form-group.col-sm-12.my-0
+                            label.col-form-label Endereço  
+                            input(type='text', class='form-control',placeholder=''+clientes.endereco, name='endereco', readonly)
+                    .row    
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Bairro  
+                            input(type='text', class='form-control',placeholder=''+clientes.bairro, name='bairro', readonly)
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Cidade 
+                            input(type='text', class='form-control',placeholder=''+clientes.cidade, name='cidade',readonly)
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Estado  
+                            input(type='text', class='form-control',placeholder=''+clientes.uf, name='estado', readonly)
+                    .row
+                        .form-group.col-sm-3.my-0
+                            label.col-form-label CEP  
+                            input(type='text', class='form-control',placeholder=''+clientes.cep, name='cep', readonly)
+                        .form-group.col-sm-3.my-0
+                            label.col-form-label CPF
+                            input(type='text', class='form-control',placeholder=''+clientes.cpf, name='cpf', readonly)
+                        .form-group.col-sm-3.my-0
+                            label.col-form-label RG  
+                            input(type='text', class='form-control',placeholder=''+clientes.rg, name='rg', readonly)
+                        .form-group.col-sm-3.my-0
+                            label.col-form-label Nascimento  
+                            input(type='text', class="form-control",id='view'+clientes.id,name='nascimento',  readonly)
+                        
+                        script.
+                            $(document).ready(function(){
+                               let aux = "#{clientes.data_nascimento}";
+                               var nasc = new Date(aux);
+                               var dia, mes, ano;
+                               dia = String(nasc.getDate());
+                               if (dia.length == 1) {
+                                    dia = "0" + dia;
+                               }
+                               mes = String(nasc.getMonth()+1);
+                               if (mes.length == 1) {
+                                    mes = "0" + mes;
+                               } 
+                               ano = nasc.getFullYear();
+                               let nascComp = ""+dia+"/"+mes+"/"+ano;
+                               $("#view"+"#{clientes.id}").val(nascComp);
+                              
+                            });        
+                    .row
+                        .form-group.col-sm-6.px-6.my-0
+                            label.col-form-label Telefone Residencial  
+                            input(type='text', class='form-control',placeholder=''+clientes.tel_residencial, name='telRes', readonly)
+                        .form-group.col-sm-6.px-6.my-0
+                            label.col-form-label Telefone Celular 
+                            input(type='text', class='form-control',placeholder=''+clientes.tel_celular, name='telCel', readonly)
+                    
+            .modal-footer
+                button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close
+            
+               

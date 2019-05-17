@@ -1,0 +1,17 @@
+extends template
+
+block content
+    
+    h1.display-1 Registro de Usuário
+    div.input-group
+        form(class='form-container' action='/users/register', method='POST')
+            div.form-group.mb-3
+                input(type='text', name='username', class='form-control form-control-lg', placeholder='Usuário',required,autofocus)
+            div.form-group.mb-3
+                input(type='email', name='email', class='form-control form-control-lg', placeholder='E-mail',required,autofocus)
+            div.form-group.mb-3    
+                input(type='password', name='password', class='form-control form-control-lg', placeholder='Senha',required)
+            div.form-group   
+                button(type='submit', class='form-control') Registrar
+            include ./messages/messages.pug
+

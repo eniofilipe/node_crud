@@ -50,6 +50,9 @@ app.set('views' , path.join(__dirname, 'views'));
 app.use('/', require('./rotas/index.js'));
 app.use('/users', require('./rotas/users.js'));
 app.use('/dashboard', require('./rotas/dashboard.js'));
+app.use('/clients', require('./rotas/clients.js'));
+app.use('/fornecedor', require('./rotas/fornecedor.js'));
+app.use('/produtos', require('./rotas/produtos.js'));
 //app.post('/auth', function(request, response) {
 //	const username = request.body.username;
 //    const password = request.body.password;

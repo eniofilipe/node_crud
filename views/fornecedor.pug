@@ -1,0 +1,43 @@
+extends template
+
+block content
+    div.row
+        div.col-sm-2
+            p.h3 Fornecedores  
+        .col-sm-8
+            button(type='button', class='btn btn-info btn-md mb-1 ', data-toggle='modal', data-target='#modalAddFornecedor') + Fornecedor
+            div(class='modal fade', id='modalAddFornecedor', role='dialog')
+                include ./modals/addFornecedor.pug
+    div.row 
+        div(class='table-wrapper', id='tableClients')
+        case fornecedor
+            when 0
+                p.text-center Não achamos ninguém
+            default
+                table.table.table-hovered
+                    thead.thead-dark
+                        tr
+                            th(scope='col') ID
+                            th(scope='col') Empresa
+                            th(scope='col') Telefone
+                            th(scope='col') Endereço
+                            th(scope='col') Cidade
+                            th(scope='col') Ação
+                    each fornecedor in listaFornecedor
+                        tr
+                            th(scope='row') #{fornecedor.id}
+                            td(scope='row') #{fornecedor.empresa}
+                            td(scope='row') #{fornecedor.telefone}
+                            td(scope='row') #{fornecedor.endereco}
+                            td(scope='row') #{fornecedor.cidade}
+                            td
+                                button(type='button', class='btn btn-primary btn-sm mb-1 ', data-toggle='modal', data-target='#modalViewClient'+fornecedor.id) Ver
+                                div(class='modal fade', id='modalViewClient'+fornecedor.id, role='dialog')
+                                    include ./modals/viewFornecedor.pug
+                                button(type='button', class='btn btn-success btn-sm mb-1 ', data-toggle='modal', data-target='#modalEditClient'+fornecedor.id) Editar
+                                div(class='modal fade', id='modalEditClient'+fornecedor.id, role='dialog')
+                                    include ./modals/editFornecedor.pug
+                                a.btn.btn-sm.mb-1.btn-danger(href='/fornecedor/delete/' + fornecedor.id) Delete
+                    else
+                        p.text-center não achamos nada   
+

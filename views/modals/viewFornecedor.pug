@@ -1,0 +1,43 @@
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        form(action="/fornecedor/register", method="post")
+            .modal-header
+                h3 Fornecedor
+                button(type='button', class='close', data-dismiss='modal') &times;
+                include ../messages/messages.pug 
+            .modal-body
+                .container-fluid
+                    .row   
+                        .form-group.col-sm-2.my-0
+                            label.col-form-label ID
+                            input(type='text', class='form-control', placeholder=''+fornecedor.id , name='ID', readonly)
+                        .form-group.col-sm-10.my-0
+                            label.col-form-label Empresa
+                            input(type='text', class='form-control', placeholder=''+fornecedor.empresa, name='nome', readonly, id='inputNome')
+                    .row    
+                        .form-group.col-sm-12.my-0
+                            label.col-form-label Endereço  
+                            input(type='text', class='form-control',placeholder=''+fornecedor.endereco, name='endereco', readonly)
+                    .row    
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Cidade 
+                            input(type='text', class='form-control',placeholder=''+fornecedor.cidade, name='cidade',readonly)
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Estado  
+                            input(type='text', class='form-control',placeholder=''+fornecedor.uf, name='estado', readonly)
+                    .row
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label CNPJ
+                            input(type='text', class='form-control',placeholder=''+fornecedor.cnpj, name='cpf', readonly)
+                    .row
+                        .form-group.col-sm-6.px-6.my-0
+                            label.col-form-label Telefone  
+                            input(type='text', class='form-control',placeholder=''+fornecedor.telefone, name='telRes', readonly)
+                        .form-group.col-sm-6.px-6.my-0
+                            label.col-form-label Email 
+                            input(type='text', class='form-control',placeholder=''+fornecedor.email, name='telCel', readonly)
+                    
+            .modal-footer
+                button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close
+            
+               

@@ -1,0 +1,44 @@
+extends template
+
+
+
+block content
+    div.row
+        div.col-sm-2
+            p.h3 Produtos  
+        .col-sm-8
+            button(type='button', class='btn btn-info btn-md mb-1 ', data-toggle='modal', data-target='#modalAddClient') + Produto
+            div(class='modal fade', id='modalAddClient', role='dialog')
+                include ./modals/addProduto.pug
+    div.row 
+        div(class='table-wrapper', id='tableClients')
+        case produtos
+            when 0
+                p.text-center Não achamos ninguém
+            default
+                table.table.table-hovered 
+                    thead.thead-dark
+                        tr
+                            th(scope='col') ID
+                            th(scope='col') Nome
+                            th(scope='col') Preço
+                            th(scope='col') Quant
+                            th(scope='col') Ação
+                    each produtos in tabela
+                        tr
+                            th(scope='row') #{produtos.id}
+                            td(scope='row') #{produtos.nome}
+                            td(scope='row') R$ #{produtos.preco}
+                            td(scope='row') #{produtos.quantidade}
+                            td
+                                button(type='button', class='btn btn-primary btn-sm mb-1 ', data-toggle='modal', data-target='#modalViewClient'+produtos.id) Ver
+                                div(class='modal fade', id='modalViewClient'+produtos.id, role='dialog')
+                                    include ./modals/viewProduto.pug
+                                button(type='button', class='btn btn-success btn-sm mb-1 ', data-toggle='modal', data-target='#modalEditClient'+produtos.id) Editar
+                                div(class='modal fade', id='modalEditClient'+produtos.id, role='dialog')
+                                    include ./modals/editProduto.pug
+                                    
+                                a.btn.btn-sm.mb-1.btn-danger(href='/produtos/delete/' + produtos.id) Delete
+                    else
+                        p.text-center não achamos nada   
+

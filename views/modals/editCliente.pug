@@ -1,0 +1,67 @@
+
+
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        form(action="/clients/update", method="post")
+            .modal-header
+                h3 Cliente
+                button(type='button', class='close', data-dismiss='modal') &times;
+                include ../messages/messages.pug 
+            .modal-body
+                .container-fluid
+                    .row  
+                        .form-group.col-sm-2.my-0
+                            label.col-form-label ID
+                            input(type='text', class='form-control', value=''+clientes.id , name='id', readonly, id='idCliente')
+                        .form-group.col-sm-10.my-0
+                            label.col-form-label Nome
+                            input(type='text', class='form-control', value=''+clientes.nome, name='nome',  id='inputNome')
+                    .row    
+                        .form-group.col-sm-12.my-0
+                            label.col-form-label Endereço  
+                            input(type='text', class='form-control',value=''+clientes.endereco, name='endereco')
+                    .row    
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Bairro  
+                            input(type='text', class='form-control',value=''+clientes.bairro, name='bairro')
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Cidade 
+                            input(type='text', class='form-control',value=''+clientes.cidade, name='cidade')
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Estado  
+                            input(type='text', class='form-control',value=''+clientes.uf, name='estado')
+                    .row
+                        .form-group.col-sm-3.my-0
+                            label.col-form-label CEP  
+                            input(type='text', class='form-control',value=''+clientes.cep, name='cep')
+                        .form-group.col-sm-3.my-0
+                            label.col-form-label CPF
+                            input(type='text', class='form-control',value=''+clientes.cpf, name='cpf')
+                        .form-group.col-sm-3.my-0
+                            label.col-form-label RG  
+                            input(type='text', class='form-control',value=''+clientes.rg, name='rg')
+                        .form-group.col-sm-3.my-0
+                            label.col-form-label Nascimento  
+                            div.input-group.input-addon.date(id='alguma'+clientes.id)
+                                input(type='text', class="form-control", readonly, name='nascimento', value=''+clientes.nascimento)
+                                span.input-group-addon.text-middle
+                                    i.fas.fa-calendar.input-group-text.form-control
+                        
+                        script.
+                            $(document).ready(function(){
+                               $('#alguma'+"#{clientes.id}").datepicker({
+                                    language: "pt-BR"
+                                });
+                            });
+                    .row
+                        .form-group.col-sm-6.px-6.my-0
+                            label.col-form-label Telefone Residencial  
+                            input(type='text', class='form-control',value=''+clientes.tel_residencial, name='telRes')
+                        .form-group.col-sm-6.px-6.my-0
+                            label.col-form-label Telefone Celular 
+                            input(type='text', class='form-control',value=''+clientes.tel_celular, name='telCel')
+            .modal-footer
+                button(type='submit', class='form-control btn btn-success ml-3 mr-sm-1') Salvar 
+                button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close
+    
+               
