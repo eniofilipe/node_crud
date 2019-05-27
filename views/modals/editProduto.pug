@@ -9,11 +9,13 @@
                 include ../messages/messages.pug 
             .modal-body
                 .container-fluid
-                    .row   
+                    .row 
+                        .form-group.col-sm-2.my-0  
+                            img(src="../images/upload_files/"+produtos.imagem, style='width: 100px; heigth:100px; ')
                         .form-group.col-sm-2.my-0
                             label.col-form-label ID
                             input(type='text', class='form-control', name='id',value = produtos.id, readonly)
-                        .form-group.col-sm-10.my-0
+                        .form-group.col-sm-8.my-0
                             label.col-form-label Nome
                             input(type='text', class='form-control', name='nome',value = produtos.nome)
                     .row    
@@ -27,6 +29,10 @@
                         .form-group.col-sm-4.my-0
                             label.col-form-label Quantidade 
                             input(type='text', class='form-control',name='quantidade',value = produtos.quantidade)
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Imagem 
+                            input(type='file', class='form-control', id='file-chooser', value =  name='photo', accept='image/*', )
+                    
                         
             .modal-footer
                 button(type='submit', class='form-control btn btn-success ml-3 mr-sm-1') Salvar  

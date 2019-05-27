@@ -7,6 +7,7 @@ const {addPessoa, deletePessoa} = require('./rotas/pessoa');
 var session = require('express-session');
 const flash = require('connect-flash')
 const passport = require('passport');
+const fs = require('fs');
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.set('view engine','pug');
 
 //body parser
 app.use(bodyParser.urlencoded({ extended: true}));
+
+
 
 // Express Session
 app.use(session({
@@ -53,6 +56,8 @@ app.use('/dashboard', require('./rotas/dashboard.js'));
 app.use('/clients', require('./rotas/clients.js'));
 app.use('/fornecedor', require('./rotas/fornecedor.js'));
 app.use('/produtos', require('./rotas/produtos.js'));
+app.use('/funcionarios', require('./rotas/funcionarios.js'));
+app.use('/PDV', require('./rotas/pdv.js'));
 //app.post('/auth', function(request, response) {
 //	const username = request.body.username;
 //    const password = request.body.password;

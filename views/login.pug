@@ -1,22 +1,21 @@
 doctype html
 html
     head
-    
+        title Login MSSYSTEM
         script(src='/bower_components/jquery/dist/jquery.js')
         script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
-        link( rel = 'stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
-        link( rel = 'stylesheet', type='text/css', href='/css/global.css')
-    body
-        div.container-fluid.bg
-            div.row.justify-content-center
-                div.col-12.col-sm-6.col-md-3.center
+        //link( rel = 'stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+        link( rel = 'stylesheet', type='text/css', href='/css/sb-admin.css')
+    body.bg-dark
+        div.card.card-login.mx-auto.mt-5
+            div.card-header Login
+            div.card-body
                         
                         form(class='form-container' action='/users/login', method='POST')
-                            h2 Login
                             div.form-group.mb-3
                                 input(type='text', name='username', class='form-control form-control-lg', placeholder='Usuário',required,autofocus)
                             div.form-group.mb-3    
                                 input(type='password', name='password', class='form-control form-control-lg', placeholder='Senha',required)
                             div.form-group   
-                                button(type='submit', class='form-control') Login
+                                button(type='submit', class='form-control btn btn-primary btn-block') Login
                             include ./messages/messages.pug

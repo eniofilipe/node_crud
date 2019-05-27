@@ -1,0 +1,53 @@
+
+
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        form(action="/funcionarios/register", method="post")
+            .modal-header
+                h3 Funcionários
+                button(type='button', class='close', data-dismiss='modal') &times;
+                include ../messages/messages.pug 
+            .modal-body
+                .container-fluid
+                    .row
+                        .form-group.col-sm-2.my-0
+                            img(id='preview-img-funcionarios',style='width: 100px; heigth:100px; ', src="../images/upload_files/"+funcionarios.imagem)   
+                        .form-group.col-sm-2.my-0
+                            label.col-form-label ID
+                            input(type='text', class='form-control', name='ID', value = funcionarios.id, readonly)
+                        .form-group.col-sm-8.my-0
+                            label.col-form-label Nome
+                            input(type='text', class='form-control', name='nome', value = funcionarios.nome, readonly)
+                    .row    
+                        .form-group.col-sm-12.my-0
+                            label.col-form-label Descrição  
+                            input(type='text', class='form-control',name='descricao',value = funcionarios.telefone ,readonly)
+                    .row 
+                        .form-group.col-sm-4.my-0    
+                            label.col-form-label Nascimento  
+                            input(type='text', class="form-control",id='view'+funcionarios.id,name='nascimento',  readonly)
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Cargo 
+                            input(type='text', class='form-control',name='quantidade',value = funcionarios.cargo, readonly)
+                        
+                        script.
+                            $(document).ready(function(){
+                               let aux = "#{funcionarios.nascimento}";
+                               var nasc = new Date(aux);
+                               var dia, mes, ano;
+                               dia = String(nasc.getDate());
+                               if (dia.length == 1) {
+                                    dia = "0" + dia;
+                               }
+                               mes = String(nasc.getMonth()+1);
+                               if (mes.length == 1) {
+                                    mes = "0" + mes;
+                               } 
+                               ano = nasc.getFullYear();
+                               let nascComp = ""+dia+"/"+mes+"/"+ano;
+                               $("#view"+"#{funcionarios.id}").val(nascComp);
+                              
+                            });
+
+            .modal-footer
+                button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close

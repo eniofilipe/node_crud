@@ -19,6 +19,7 @@ block content
                 table.table.table-hovered 
                     thead.thead-dark
                         tr
+                            th(scole='col') Img
                             th(scope='col') ID
                             th(scope='col') Nome
                             th(scope='col') Preço
@@ -26,6 +27,8 @@ block content
                             th(scope='col') Ação
                     each produtos in tabela
                         tr
+                            th(scope='row')
+                                img(src="../images/upload_files/"+produtos.imagem, style='width: 100px; heigth:100px; ')
                             th(scope='row') #{produtos.id}
                             td(scope='row') #{produtos.nome}
                             td(scope='row') R$ #{produtos.preco}

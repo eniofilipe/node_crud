@@ -42,17 +42,12 @@
                             input(type='text', class='form-control',value=''+clientes.rg, name='rg')
                         .form-group.col-sm-3.my-0
                             label.col-form-label Nascimento  
-                            div.input-group.input-addon.date(id='alguma'+clientes.id)
-                                input(type='text', class="form-control", readonly, name='nascimento', value=''+clientes.nascimento)
+                            div.input-group.input-addon.date(id='editData'+clientes.id)
+                                input(type='text', class="form-control",readonly, name='nascimento')
                                 span.input-group-addon.text-middle
                                     i.fas.fa-calendar.input-group-text.form-control
                         
-                        script.
-                            $(document).ready(function(){
-                               $('#alguma'+"#{clientes.id}").datepicker({
-                                    language: "pt-BR"
-                                });
-                            });
+                        
                     .row
                         .form-group.col-sm-6.px-6.my-0
                             label.col-form-label Telefone Residencial  
@@ -63,5 +58,15 @@
             .modal-footer
                 button(type='submit', class='form-control btn btn-success ml-3 mr-sm-1') Salvar 
                 button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close
-    
+script.
+    $(document).ready(function(){
+        let aux = "#{clientes.data_nascimento}";
+        var nasc = new Date(aux);
+        
+        
+        $("#editData"+"#{clientes.id}").datepicker({
+            language: "pt-BR"
+        });
+        $("#editData"+"#{clientes.id}").datepicker('setDate',nasc);                       
+    });    
                

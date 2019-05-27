@@ -9,11 +9,13 @@
                 include ../messages/messages.pug 
             .modal-body
                 .container-fluid
-                    .row   
+                    .row
+                        .form-group.col-sm-2.my-0
+                            img(id='preview-img',style='width: 100px; heigth:100px; ', src="../images/upload_files/"+produtos.imagem)   
                         .form-group.col-sm-2.my-0
                             label.col-form-label ID
                             input(type='text', class='form-control', name='ID', value = produtos.id, readonly)
-                        .form-group.col-sm-10.my-0
+                        .form-group.col-sm-8.my-0
                             label.col-form-label Nome
                             input(type='text', class='form-control', name='nome', value = produtos.nome, readonly)
                     .row    

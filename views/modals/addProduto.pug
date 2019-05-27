@@ -2,18 +2,20 @@
 
 .modal-dialog.modal-dialog-centered.modal-xl 
     .modal-content
-        form(action="/produtos/register", method="post")
+        form(action="/produtos/register", method="post",  enctype='multipart/form-data')
             .modal-header
                 h3 Cadastro Produto
                 button(type='button', class='close', data-dismiss='modal') &times;
                 include ../messages/messages.pug 
             .modal-body
                 .container-fluid
-                    .row   
+                    .row 
+                        .form-group.col-sm-2.my-0
+                            img(id='preview-img',style='width: 100px; heigth:100px; ')
                         .form-group.col-sm-2.my-0
                             label.col-form-label ID
                             input(type='text', class='form-control', name='ID', readonly)
-                        .form-group.col-sm-10.my-0
+                        .form-group.col-sm-8.my-0
                             label.col-form-label Nome
                             input(type='text', class='form-control', name='nome')
                     .row    
@@ -27,7 +29,46 @@
                         .form-group.col-sm-4.my-0
                             label.col-form-label Quantidade 
                             input(type='text', class='form-control',name='quantidade')
-                        
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Imagem 
+                            input(type='file', class='form-control', id='file-chooser', name='photo', accept='image/*', )
+
+                        script.
+                            $(document).ready(function(){
+                                
+                                $('#file-chooser').on('change', function(event){
+                                    RecurFadeIn();
+                                    readURL(this);
+                                });
+                                $('#file-chooser').on('click', function(event){
+                                    RecurFadeIn();
+                                });
+                                function readURL(input){
+                                    if(input.files && input.files[0]){
+                                        var reader = new FileReader();
+                                        var filename = $("#file-chooser").val();
+                                        filename = filename.substring(filename.lastIndexOf('\\')+1);
+                                        reader.onload = function(e){
+                                            debugger;
+                                            $('#preview-img').attr('src',e.target.result);
+                                            $('#preview-img').hide();
+                                            $('#preview-img').fadeIn(500);
+                                        }
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+
+                                }
+                                function RecurFadeIn(){ 
+                                    console.log('ran');
+                                    FadeInAlert("Wait for it...");  
+                                    }
+                                    function FadeInAlert(text){
+                                    $(".alert").show();
+                                    $(".alert").text(text).addClass("loading");  
+                                }
+                               
+                            });
+                       
             .modal-footer
                 button(type='submit', class='form-control btn btn-success ml-3 mr-sm-1') Salvar  
                 button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close

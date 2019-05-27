@@ -1,7 +1,22 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 const {ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+
+const handleError = (err, res) => {
+    res
+      .status(500)
+      .contentType("text/plain")
+      .end("Oops! Something went wrong!");
+  };
+  
+  const upload = multer({
+    dest: "./public/images/upload_files"
+        // you might also want to set some limits: https://github.com/expressjs/multer#limits
+  });
 
 router.get('/view', ensureAuthenticated, (req, res) => { 
 
@@ -36,23 +51,47 @@ router.get('/delete/:id', (req, res)=>{
         })
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', upload.single('photo'), (req, res) => {
     
-    let registerQuery = 'INSERT INTO produtos(nome,preco,quantidade,descricao) VALUE ?';
+    let registerQuery = 'INSERT INTO produtos(nome,preco,quantidade,descricao, imagem) VALUE ?';
     const {nome, descricao,preco,quantidade} = req.body;
-        
-        const values = [[nome, preco, quantidade, descricao]];
-            con.query(registerQuery, [values], function(error, result, fields){
-                if(error){
-                    return console.log(error)
-                }else{
-                    console.log('Adicionou registro!');
-                    req.flash('success_msg', 'Registro adicionado com sucesso!');
-                    res.redirect('/produtos/view');
-                }
-           });
-   
 
+    const old = req.file.path;
+    const imageName = req.file.originalname;
+    const newPath ='./public/images/upload_files/';
+    const namePath = newPath + imageName;
+            if(req.file){
+
+                fs.rename(old, namePath, function(err){
+                    if(err){
+                        console.log('Err: ',err);
+                        res.end('Erro ao mover imagem!');
+                    }
+                    var msg = imageName + " salva em: " + newPath;
+                    console.log(msg);
+
+                    const values = [[nome, preco, quantidade, descricao,imageName]];
+                    con.query(registerQuery, [values], function(error, result, fields){
+                    if(error){
+                        return console.log(error);
+                    }else{
+                        console.log('Adicionou registro!');
+                        req.flash('success_msg', 'Registro adicionado com sucesso!');
+                        res.redirect('/produtos/view');
+                    }
+               });
+
+                });
+
+
+                
+
+
+
+            }else throw 'error';
+            
+
+            
 });
 
 router.post('/update', (req, res) => {
@@ -67,8 +106,6 @@ router.post('/update', (req, res) => {
 
     const {id, nome, descricao, preco, quantidade} = req.body;
         
-    
-
     console.log(id);
         const values = [nome,descricao,preco,quantidade, Number(id)];
             con.query(registerQuery, values, function(error, result, fields){
@@ -83,6 +120,7 @@ router.post('/update', (req, res) => {
    
 
 });
+
 module.exports = router;
 
 /*

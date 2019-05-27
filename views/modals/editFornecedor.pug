@@ -2,7 +2,7 @@
     .modal-content
         form(action="/fornecedor/update", method="post")
             .modal-header
-                h3 Cliente
+                h3 Editar Fornecedor
                 button(type='button', class='close', data-dismiss='modal') &times;
                 include ../messages/messages.pug 
             .modal-body
@@ -10,10 +10,10 @@
                     .row   
                         .form-group.col-sm-2.my-0
                             label.col-form-label ID
-                            input(type='text', class='form-control', value=''+fornecedor.id , name='ID', readonly)
+                            input(type='text', class='form-control', value=''+fornecedor.id , name='id', readonly)
                         .form-group.col-sm-10.my-0
                             label.col-form-label Empresa
-                            input(type='text', class='form-control', value=''+fornecedor.empresa, name='nome')
+                            input(type='text', class='form-control', value=''+fornecedor.empresa, name='empresa')
                     .row    
                         .form-group.col-sm-12.my-0
                             label.col-form-label Endereço  
@@ -24,18 +24,18 @@
                             input(type='text', class='form-control',value=''+fornecedor.cidade, name='cidade')
                         .form-group.col-sm-4.my-0
                             label.col-form-label Estado  
-                            input(type='text', class='form-control',value=''+fornecedor.uf, name='estado')
+                            input(type='text', class='form-control',value=''+fornecedor.uf, name='uf')
                     .row
                         .form-group.col-sm-4.my-0
                             label.col-form-label CNPJ
-                            input(type='text', class='form-control',value=''+fornecedor.cnpj, name='cpf')
+                            input(type='text', class='form-control',value=''+fornecedor.cnpj, name='cnpj')
                     .row
                         .form-group.col-sm-6.px-6.my-0
                             label.col-form-label Telefone  
-                            input(type='text', class='form-control',value=''+fornecedor.telefone, name='telRes')
+                            input(type='text', class='form-control',value=''+fornecedor.telefone, name='telefone')
                         .form-group.col-sm-6.px-6.my-0
                             label.col-form-label Email 
-                            input(type='text', class='form-control',value=''+fornecedor.email, name='telCel')
+                            input(type='text', class='form-control',value=''+fornecedor.email, name='email')
                     
             .modal-footer
                 button(type='submit', class='form-control btn btn-success ml-3 mr-sm-1') Salvar 

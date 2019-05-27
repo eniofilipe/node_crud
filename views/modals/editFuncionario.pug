@@ -1,0 +1,82 @@
+
+
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        form(action="/funcionarios/update", method="post" , enctype='multipart/form-data', id='form'+funcionarios.id)
+            .modal-header
+                h3 Editar funcionário
+                button(type='button', class='close', data-dismiss='modal') &times;
+                include ../messages/messages.pug 
+            .modal-body
+                .container-fluid
+                    .row 
+                        .form-group.col-sm-2.my-0  
+                            img(src="../images/upload_files/"+funcionarios.imagem, style='width: 100px; heigth:100px; ', id='img-preview-editfuncionarios'+funcionarios.id)
+                        .form-group.col-sm-2.my-0
+                            label.col-form-label ID
+                            input(type='text', class='form-control', name='id',value = funcionarios.id, readonly)
+                        .form-group.col-sm-8.my-0
+                            label.col-form-label Nome
+                            input(type='text', class='form-control', name='nome',value = funcionarios.nome)
+                    .row    
+                        .form-group.col-sm-12.my-0
+                            label.col-form-label Telefone  
+                            input(type='text', class='form-control',name='telefone',value = funcionarios.telefone)
+                    .row    
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Nascimento  
+                            div.input-group.input-addon.date(id='editDataFunc'+funcionarios.id)
+                                input(type='text', class="form-control",readonly, name='nascimento')
+                                span.input-group-addon.text-middle
+                                    i.fas.fa-calendar.input-group-text.form-control
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Cargo 
+                            input(type='text', class='form-control',name='cargo',value = funcionarios.cargo)
+                        .form-group.col-sm-4.my-0
+                            label.col-form-label Imagem 
+                            input(type='file', class='form-control', id='file-chooser-editfuncionarios'+funcionarios.id,  name='editPhoto', accept='image/*' )
+
+                        script.
+                            $(document).ready(function(){
+                                let aux = "#{funcionarios.nascimento}";
+                                var nasc = new Date(aux);
+                                
+                                $('#file-chooser-editfuncionarios'+"#{funcionarios.id}").on('change', function(event){
+                                    RecurFadeIn();
+                                    readURL(this);
+                                });
+                                $('#file-chooser-editfuncionarios'+"#{funcionarios.id}").on('click', function(event){
+                                    RecurFadeIn();
+                                });
+                                function readURL(input){
+                                    if(input.files && input.files[0]){
+                                        var reader = new FileReader();
+                                        var filename = $("#file-chooser-editfuncionarios"+"#{funcionarios.id}").val();
+                                        filename = filename.substring(filename.lastIndexOf('\\')+1);
+                                        reader.onload = function(e){
+                                            debugger;
+                                            $('#img-preview-editfuncionarios'+"#{funcionarios.id}").attr('src',e.target.result);
+                                            $('#img-preview-editfuncionarios'+"#{funcionarios.id}").hide();
+                                            $('#img-preview-editfuncionarios'+"#{funcionarios.id}").fadeIn(500);
+                                        }
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+
+                                };
+                                function RecurFadeIn(){ 
+                                    console.log('ran');
+                                    FadeInAlert("Wait for it...");  
+                                }
+                                function FadeInAlert(text){
+                                    $(".alert").show();
+                                    $(".alert").text(text).addClass("loading");  
+                                };
+                                
+                                $("#editDataFunc"+"#{funcionarios.id}").datepicker({
+                                    language: "pt-BR"
+                                });
+                                $("#editDataFunc"+"#{funcionarios.id}").datepicker('setDate',nasc);                       
+                            }); 
+            .modal-footer
+                button(type='submit', class='form-control btn btn-success ml-3 mr-sm-1', form='form'+funcionarios.id) Salvar  
+                button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close

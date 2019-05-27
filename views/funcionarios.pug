@@ -1,0 +1,47 @@
+extends template
+
+
+
+block content
+    div.row
+        div.col-sm-2
+            p.h3 Funcionários  
+        .col-sm-8
+            button(type='button', class='btn btn-info btn-md mb-1 ', data-toggle='modal', data-target='#modalAddClient') + Funcionário
+            div(class='modal fade', id='modalAddClient', role='dialog')
+                include ./modals/addFuncionario.pug
+    div.row 
+        div(class='table-wrapper', id='tableClients')
+        case funcionarios
+            when 0
+                p.text-center Não achamos ninguém
+            default
+                table.table.table-hovered 
+                    thead.thead-dark
+                        tr
+                            th(scole='col') Img
+                            th(scope='col') ID
+                            th(scope='col') Nome
+                            th(scope='col') Telefone
+                            th(scope='col') Cargo
+                            th(scope='col') Ação
+                    each funcionarios in tabela
+                        tr
+                            th(scope='row')
+                                img(src="../images/upload_files/"+funcionarios.imagem, style='width: 100px; heigth:100px; ')
+                            th(scope='row') #{funcionarios.id}
+                            td(scope='row') #{funcionarios.nome}
+                            td(scope='row') #{funcionarios.telefone}
+                            td(scope='row') #{funcionarios.cargo}
+                            td
+                                button(type='button', class='btn btn-primary btn-sm mb-1 ', data-toggle='modal', data-target='#modalViewClient'+funcionarios.id) Ver
+                                div(class='modal fade', id='modalViewClient'+funcionarios.id, role='dialog')
+                                    include ./modals/viewFuncionario.pug
+                                button(type='button', class='btn btn-success btn-sm mb-1 ', data-toggle='modal', data-target='#modalEditClient'+funcionarios.id) Editar
+                                div(class='modal fade', id='modalEditClient'+funcionarios.id, role='dialog')
+                                    include ./modals/editFuncionario.pug
+                                    
+                                a.btn.btn-sm.mb-1.btn-danger(href='/funcionarios/delete/' + funcionarios.id) Delete
+                    else
+                        p.text-center não achamos nada   
+

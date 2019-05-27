@@ -3,44 +3,43 @@ extends template
 
 
 block content
-    div.row
-        div.col-sm-2
-            p.h3 Clientes  
-        .col-sm-8
-            button(type='button', class='btn btn-info btn-md mb-1 ', data-toggle='modal', data-target='#modalAddClient') + Cliente
-            div(class='modal fade', id='modalAddClient', role='dialog')
-                include ./modals/addCliente.pug
-    div.row 
-        div(class='table-wrapper', id='tableClients')
-        case clientes
-            when 0
-                p.text-center Não achamos ninguém
-            default
-                table.table.table-hovered
-                    thead.thead-dark
-                        tr
-                            th(scope='col') ID
-                            th(scope='col') Nome
-                            th(scope='col') CPF
-                            th(scope='col') Endereço
-                            th(scope='col') Cidade
-                            th(scope='col') Ação
-                    each clientes in tabela
-                        tr
-                            th(scope='row') #{clientes.id}
-                            td(scope='row') #{clientes.nome}
-                            td(scope='row') #{clientes.cpf}
-                            td(scope='row') #{clientes.endereco}
-                            td(scope='row') #{clientes.cidade}
-                            td
-                                button(type='button', class='btn btn-primary btn-sm mb-1 ', data-toggle='modal', data-target='#modalViewClient'+clientes.id) Ver
-                                div(class='modal fade', id='modalViewClient'+clientes.id, role='dialog')
-                                    include ./modals/viewCliente.pug
-                                button(type='button', class='btn btn-success btn-sm mb-1 ', data-toggle='modal', data-target='#modalEditClient'+clientes.id) Editar
-                                div(class='modal fade', id='modalEditClient'+clientes.id, role='dialog')
-                                    include ./modals/editCliente.pug
-                                    
-                                a.btn.btn-sm.mb-1.btn-danger(href='/clients/delete/' + clientes.id) Delete
-                    else
-                        p.text-center não achamos nada   
+    div.card.mb-3
+        div.card-header
+            div
+                label.h3 Clientes  
+                button(type='button',id='btnAddCliente', class='btn btn-info btn-md mr-0 ml-auto ', data-toggle='modal', data-target='#modalAddClient') + Cliente
+                div(class='modal fade', id='modalAddClient', role='dialog')
+                    include ./modals/addCliente.pug
+        div.card-body
+            case clientes
+                when 0
+                    p.text-center Não achamos ninguém
+                default
+                    table.table.table-hovered.table-bordered
+                        thead.thead-dark
+                            tr
+                                th(scope='col') ID
+                                th(scope='col') Nome
+                                th(scope='col') CPF
+                                th(scope='col') Endereço
+                                th(scope='col') Cidade
+                                th(scope='col') Ação
+                        each clientes in tabela
+                            tr
+                                th(scope='row') #{clientes.id}
+                                td(scope='row') #{clientes.nome}
+                                td(scope='row') #{clientes.cpf}
+                                td(scope='row') #{clientes.endereco}
+                                td(scope='row') #{clientes.cidade}
+                                td
+                                    button(type='button', class='btn btn-primary btn-sm mb-1 ', data-toggle='modal', data-target='#modalViewClient'+clientes.id) Ver
+                                    div(class='modal fade', id='modalViewClient'+clientes.id, role='dialog')
+                                        include ./modals/viewCliente.pug
+                                    button(type='button', class='btn btn-success btn-sm mb-1 ', data-toggle='modal', data-target='#modalEditClient'+clientes.id) Editar
+                                    div(class='modal fade', id='modalEditClient'+clientes.id, role='dialog')
+                                        include ./modals/editCliente.pug
+                                        
+                                    a.btn.btn-sm.mb-1.btn-danger(href='/clients/delete/' + clientes.id) Delete
+                        else
+                            p.text-center não achamos nada   
 
