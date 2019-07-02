@@ -154,6 +154,7 @@ block content
                             },
                             "createdRow": function ( row, data, index ) {
                                     $('td', row).eq(3).addClass('valor');
+                                    $('td', row).eq(3).addClass('form-control-plaintext');
                                     $('td', row).eq(4).addClass('btn btn-danger rounded-0 m-0 deleteLinha');
                                     $('td', row).eq(4).attr('id', 'buttonDeleteLinha' );
                                     $('td', row).eq(4).append('<i class="fas fa-minus-circle"/>');
@@ -167,18 +168,18 @@ block content
                         });
 
                         $('#fim').click(function(){
-                            alert("opa");
-                            var linhas=array();
-                            var cont = 0;
-                            tabelaVenda.data().each( function (d) {
-                                linhas.push(tabelaVenda.row(cont).data());
-                                cont++;
-                            } );
-
-                            var data = tabelaVenda.serializeArray();
-                            alert("opa"+data);
-                            $.post("/pdv/venda", {"tabela": JSON.stringify(linhas)});
-                            alert("opa");
+                            var data=[];
+                            var cliente = $("#nomeClienteVenda").text();
+                            var pagamento = $("#selecPagamento").val();
+                            var desconto = parseFloat(($("#inputDescontoTotal").val()).replace(',','.'));
+                            var total = parseFloat(($("#inputTotalFinal").val()).replace(',','.'));
+                            tabelaVenda.rows().every(function(){
+                                data.push(this.data());
+                            });
+                            alert("ola "+data);
+                            $.post("/pdv/venda", {produtos:data, client:cliente, pag:pagamento, desc:desconto, valor:total});
+                            
+                            
                         });
                         $('#tabelaVenda').on('click','tbody tr td.deleteLinha', function(){
                             
