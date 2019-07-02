@@ -1,0 +1,174 @@
+.modal-dialog.modal-dialog-centered.modal-md 
+    .modal-content
+        .modal-header.pb-0.bg-danger.text-white
+            span.fas.fa-money-check.align-middle.mt-3.mr-3
+             
+            span.align-middle.mt-2.h4 Checkout
+            button(type="button", class="close", data-dismiss="modal", aria-label="Fechar")
+            span(aria-hidden="true") 
+                i.far.fa-window-close
+        
+        .modal-body
+            .col-12
+                .row
+                    .col-md-4.bg-secondary.text-white.text-right.pb-1.pt-2
+                        span Cliente: 
+                    .col-md-1.pb-1.pt-2.mr-0.pr-0
+                        input.form-control-plaintext.text-right.border-0.m-0.p-0(readonly, type="text",id='labelIdCliente', name="labelIdCliente")
+                    .col-md-1.text-right.pb-1.pt-2.mx-0.px-0    
+                        span.m-0.p-0 - 
+                    .col-md-6.text-right.pb-1.pt-2.ml-0.pl-0    
+                        input.form-control-plaintext.text-right.border-0.m-0.p-0(readonly, id='labelNomeCliente', name="nomeCliente")
+                        
+                //.row
+                    .table-responsive(style="overflow: auto; height: 250px;")
+                        table.display.compact.mt-0(id='produtosFinalVenda' ) 
+                .row
+                    .col-md-4.bg-secondary.text-white.text-right.py-1
+                        span.align-middle Cobrança: 
+                    .col-md-8.mx-0.pl-0.py-1 
+                        select.custom-select.text-right(name="selecPagamento")
+                            option(selected) Selecione a forma de pagamento
+                            case pagamento
+                                when 0
+                                    option Nenhuma forma de pagamento cadastrada
+                                default
+                                    each pagamento in selecPagamentos
+                                        option(value=""+pagamento.idpagamento) #{pagamento.descricao} - #{pagamento.parcelas} X
+                    
+                    //.col-md-2.bg-secondary.text-white.text-right
+                        span 1ª parcela:  
+                    //.col-md-4.mx-0.pl-0 
+                        div.input-group.input-addon.date(id='dataPrimeiraParcela')
+                                input(type='text', class="form-control", readonly, name='primeiraParcela')
+                                span.input-group-addon.text-middle
+                                    i.fas.fa-calendar.input-group-text.form-control                
+
+                .row
+                    .col-md-4.bg-secondary.text-white.text-right.py-1
+                        span Desconto: 
+                    .col-md-8.mx-0.pl-0.py-1 
+                        input.form-control.text-right(type='text', onkeyup='calculaDescontoTotal()', value='0,00', id='inputDescontoTotal')
+                .row
+                    .col-md-4.bg-secondary.text-white.text-right.pt-1.pb-2
+                        span Total: 
+                    .col-md-8.mx-0.pl-0.pt-1.pb-2 
+                        input.form-control.text-right(type='text',readonly, id="inputTotalFinal", name="totalFinal")
+                            
+                
+                                
+                            
+                            
+
+        .modal-footer
+            
+            .col-6
+                button.btn.btn-secondary.btn-block.rounded-0(id="", data-dismiss='modal') Cancelar
+            .col-6
+                button.btn.btn-primary.btn-block.rounded-0(id="fim") Fim
+script.
+    
+    $(document).ready(function(){
+        
+        var txt;
+        
+        var item;
+        
+        var valTotal ;
+
+
+        /*$("#dataPrimeiraParcela").datepicker({
+            startDate: "today",
+            language: 'pt-BR',
+            todayBtn: "linked",
+            todayHighlight: true,
+            defaultViewDate: "today" 
+        });
+
+        $('#dataPrimeiraParcela').datepicker('setDate', 'today');
+        */
+        $("#aquieomodal").on('show.bs.modal', function (event) {
+            txt = document.getElementById("idClienteVenda").textContent;
+            $("#labelNomeCliente").attr('value', document.getElementById("nomeClienteVenda").textContent );
+            $("#labelIdCliente").attr('value', txt );
+
+            //var tblProdutos = jQuery('#tabelaVenda');
+            //var clone = jQuery('#produtosFinalVenda');
+
+            //clone.html(tblProdutos.children().clone()); 
+
+            valTotal = document.getElementById("valorVenda").textContent;
+            $("#inputTotalFinal").attr('value',valTotal);
+            
+            
+        });
+
+
+        /* 
+        var opa = $('#produtosFinalVenda').DataTable({
+                dom: 'Bfrtip',
+                select: true,
+                searching: false
+            });
+
+        $('#produtosFinalVenda').on('click','tbody tr td.deleteLinha', function(){
+                            
+                            var a = $(this).parents('tr').children('td.valor');
+                            var valor = opa.cell(a).data();
+                            
+                            valor = valor.toString().replace(',','.');
+                           
+                            valor = parseFloat(valor);
+                            
+                            var total = document.getElementById("valorVenda").textContent;
+                            
+                            total = total.replace(',','.');
+                            
+                            total = parseFloat(total);
+                            
+                            total = total - valor;
+                            
+                            $("#valorVenda").html(total.toFixed(2).toString().replace('.',','));
+                            total = document.getElementById("valorVenda").textContent;
+                            $("#inputTotalFinal").attr('value',Total);                        
+                            opa.row( $(this).parents('tr') ).remove().draw();
+                        });
+        
+        /*
+
+                
+        
+        
+        
+        var opa = $('#tabelaProcuraClientes').DataTable({
+            dom: 'Bfrtip',
+            select: true,
+            searching: false
+         });
+        $('#buttonSelecCliente').click(function(){
+            var aux = opa.rows({selected: true}).data();
+            $("#idClienteVenda").html(aux[0][0]);
+            $("#nomeClienteVenda").html(aux[0][1]);
+        });
+      $("#inputProcuraCliente").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tabelaProcuraClientes tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+        */
+    });
+
+    function calculaDescontoTotal(){
+                        var desc = parseFloat(($("#inputDescontoTotal").val()).replace(',','.'));
+                        var total = document.getElementById("valorVenda").textContent;
+                        var unit = parseFloat(total.replace(',','.'));
+                        var val = unit - desc;
+
+                        
+                        $("#inputTotalFinal").attr('value',val.toFixed(2).toString().replace('.',','));
+                        $("#inputDescontoTotal").attr('value',desc.toFixed(2).toString().replace('.',','));
+                        
+                    };
+
+   

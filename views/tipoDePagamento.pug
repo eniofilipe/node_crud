@@ -1,0 +1,47 @@
+extends template
+
+block content
+    nav(aria-label='breadcrumb')
+        ol.breadcrumb
+            li.breandcrumb-item.active(aria-current='page') Formas de pagamentos
+    div.card.mb-3
+        div.card-header
+            div
+                button(type='button', class='btn btn-warning btn-sm mb-1 ', data-toggle='modal', data-target='#modalAddFornecedor') + Nova forma de pagamento
+                div(class='modal fade', id='modalAddFornecedor', role='dialog')
+                    include ./modals/addTipoDePagamento.pug
+        div.card-body 
+            case pagamento
+                when 0
+                default
+                    table.display.compact.mt-0(id='tabelaPagamentos')
+                        thead.thead-dark
+                            tr
+                                th(scope='col') ID
+                                th(scope='col') Descrição
+                                th(scope='col') Parcelas
+                        each pagamento in listaPagamentos
+                            tr
+                                th(scope='row') #{pagamento.idpagamento}
+                                td(scope='row') #{pagamento.descricao}
+                                td(scope='row') #{pagamento.parcelas}
+                                td
+                                    button(type='button', class='btn btn-success btn-sm mb-1 ', data-toggle='modal', data-target='#modalEditClient'+pagamento.idpagamento) Editar
+                                    div(class='modal fade', id='modalEditClient'+pagamento.idpagamento, role='dialog')
+                                        include ./modals/editTipoDePagamento.pug
+                                    a.btn.btn-sm.mb-1.btn-danger(href='/pagamento/delete/' + pagamento.idpagamento) Delete
+    script.
+        $(document).ready(function(){ 
+            var tabelaPagamentos = $("#tabelaPagamentos").DataTable({
+                                "language": {
+                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                                },
+                                
+                                searching: false,
+                                paging: false,
+                                info: false,
+                                ordering: false                            
+                            });
+        })               
+                              
+

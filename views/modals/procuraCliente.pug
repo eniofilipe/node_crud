@@ -1,0 +1,52 @@
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        .modal-header
+            h3 Procura Clientes
+        .modal-body
+            .col-12
+                .row
+                    .input-group
+                        input.form-control(type='text', placeholder="Cliente", aria-describedby='button-addon1' , id="inputProcuraCliente")
+                        div.input-group-append(id='button-addon1')
+                                button.btn.btn-outline-secondary(type='button')
+                                    i.fas.fa-search
+                                button.btn.btn-outline-secondary(type='button')
+                                    i.fas.fa-plus
+                .row
+                    
+                    .table-responsive(style="overflow: auto; height: 350px;")
+                            table.display.compact(id='tabelaProcuraClientes', data-click-to-select="true" )
+                                thead
+                                        tr
+                                            th(scope="col") ID
+                                            th(scope="col") Nome
+                                            th(scope="col") CPF
+                                tbody
+                                    each clientes in tabelaClientes
+                                        tr
+                                            td(scope='row') #{clientes.id}
+                                            td(scope='row') #{clientes.nome}
+                                            td(scope='row') #{clientes.cpf}
+        .modal-footer
+            .col-6
+            .col-6
+                button.btn.btn-success(id="buttonSelecCliente", data-dismiss='modal') Selecionar
+script.
+    $(document).ready(function(){
+        var opa = $('#tabelaProcuraClientes').DataTable({
+            dom: 'Bfrtip',
+            select: true,
+            searching: false
+        });
+        $('#buttonSelecCliente').click(function(){
+            var aux = opa.rows({selected: true}).data();
+            $("#idClienteVenda").html(aux[0][0]);
+            $("#nomeClienteVenda").html(aux[0][1]);
+        });
+      $("#inputProcuraCliente").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tabelaProcuraClientes tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });

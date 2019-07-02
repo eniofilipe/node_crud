@@ -8,7 +8,8 @@ html
         link( rel = 'stylesheet', type='text/css', href='/css/sb-admin.css')
     body.bg-dark
         div.card.card-login.mx-auto.mt-5
-            div.card-header Login
+            div.card-header.text-center.bg-secondary
+                img.brand-card-img-top(src="../images/logo/logo.png", style='width: 300px;' )
             div.card-body
                         
                         form(class='form-container' action='/users/login', method='POST')
@@ -17,5 +18,5 @@ html
                             div.form-group.mb-3    
                                 input(type='password', name='password', class='form-control form-control-lg', placeholder='Senha',required)
                             div.form-group   
-                                button(type='submit', class='form-control btn btn-primary btn-block') Login
+                                button(type='submit', class='form-control btn btn-danger btn-primary btn-block') Login
                             include ./messages/messages.pug

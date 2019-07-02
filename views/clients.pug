@@ -3,19 +3,24 @@ extends template
 
 
 block content
+    nav(aria-label='breadcrumb')
+        ol.breadcrumb
+            li.breandcrumb-item.active(aria-current='page') Clientes
+   
     div.card.mb-3
         div.card-header
-            div
-                label.h3 Clientes  
+            div 
                 button(type='button',id='btnAddCliente', class='btn btn-info btn-md mr-0 ml-auto ', data-toggle='modal', data-target='#modalAddClient') + Cliente
                 div(class='modal fade', id='modalAddClient', role='dialog')
                     include ./modals/addCliente.pug
         div.card-body
+            .input-group.mb-3
+                        input.form-control(type='text', placeholder="Procurar cliente", aria-describedby='button-addon1' , id="inputProcuraCliente")
             case clientes
                 when 0
                     p.text-center Não achamos ninguém
                 default
-                    table.table.table-hovered.table-bordered
+                    table.display.compact.mt-0(id='tabelaClientes')
                         thead.thead-dark
                             tr
                                 th(scope='col') ID
@@ -32,14 +37,31 @@ block content
                                 td(scope='row') #{clientes.endereco}
                                 td(scope='row') #{clientes.cidade}
                                 td
-                                    button(type='button', class='btn btn-primary btn-sm mb-1 ', data-toggle='modal', data-target='#modalViewClient'+clientes.id) Ver
+                                    button(type='button', class='btn btn-primary btn-sm  ', data-toggle='modal', data-target='#modalViewClient'+clientes.id) Ver
                                     div(class='modal fade', id='modalViewClient'+clientes.id, role='dialog')
                                         include ./modals/viewCliente.pug
-                                    button(type='button', class='btn btn-success btn-sm mb-1 ', data-toggle='modal', data-target='#modalEditClient'+clientes.id) Editar
+                                    button(type='button', class='btn btn-success btn-sm  ', data-toggle='modal', data-target='#modalEditClient'+clientes.id) Editar
                                     div(class='modal fade', id='modalEditClient'+clientes.id, role='dialog')
                                         include ./modals/editCliente.pug
                                         
-                                    a.btn.btn-sm.mb-1.btn-danger(href='/clients/delete/' + clientes.id) Delete
+                                    a.btn.btn-sm.btn-danger(href='/clients/delete/' + clientes.id) Delete
                         else
                             p.text-center não achamos nada   
-
+    script.
+        $(document).ready(function(){ 
+            var tabelaPagamentos = $("#tabelaClientes").DataTable({
+                                "language": {
+                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                                },
+                                
+                                searching: false,
+                                info: false                        
+                            });
+            
+            $("#inputProcuraCliente").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tabelaClientes tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        })  

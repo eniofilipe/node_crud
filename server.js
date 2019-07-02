@@ -58,6 +58,7 @@ app.use('/fornecedor', require('./rotas/fornecedor.js'));
 app.use('/produtos', require('./rotas/produtos.js'));
 app.use('/funcionarios', require('./rotas/funcionarios.js'));
 app.use('/PDV', require('./rotas/pdv.js'));
+app.use('/pagamento', require('./rotas/tipoDePagamento.js'));
 //app.post('/auth', function(request, response) {
 //	const username = request.body.username;
 //    const password = request.body.password;

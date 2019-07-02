@@ -4,6 +4,7 @@ block title
     title PDV
 
 block content
+    
     div.row
         div.card-group
             .card.mx-2.shadow.card-pdv    
@@ -13,38 +14,38 @@ block content
                 .card-body
                     .input-group.mb-2
                         .row
-                            .col-12
+                            .col-md-12.col-sm-12.col-xm-12
                                 span.h3.col-12(id='label-produto') Produto
                         .row
-                            .col-md-6
+                            .col-md-6.col-sm-6.col-xm-6
                                 
                                 img(id='img-venda',style='width: 100px; heigth:100px; ', src="../images/upload_files/SISTEMAOITV-1RECEPTOR.jpg")
-                            .col-md-6
+                            .col-md-6.col-sm-6.col-xm-6
                                    
                                     label.col-form-label.mx.pr(for='inputCodigo') Código
                                     input.form-control.mx-0(type='text', placeholder='Código', id='inputCodigo')
                         .row        
-                            .col-md-12
-                                .row.mb-2
-                                    .col-md-6
+                            .col-md-12.col-sm-12.col-xm-12
+                                .row.mb-1
+                                    .col-md-6.col-sm-6.col-xm-6
                                         label.col-form-label(for='inputCodigo') Quantidade
                                         input.form-control(type='text', onkeyup='calculaQuantidade()', value='1,0', id='inputQuantidade')
-                                    .col-md-6
+                                    .col-md-6.col-sm-6.col-xm-6
                                         label.col-form-label(for='inputCodigo') Valor Unitário
                                         .input-group
                                             .input-group-prepend
                                                 span.input-group-text R$
                                             input.form-control(type='text', placeholder='0,00', id='inputValorUnit')
                         .row        
-                            .col-md-12
-                                .row.mb-2
-                                    .col-md-6
+                            .col-md-12.col-sm-12.col-xm-12
+                                .row.mb-1
+                                    .col-md-6.col-sm-6.col-xm-6
                                         label.col-form-label(for='inputCodigo') Desconto
                                         .input-group
                                             .input-group-prepend
                                                 span.input-group-text R$
                                             input.form-control(type='text', onkeyup='calculaDesconto()', value='0,00', id='inputDesconto')
-                                    .col-md-6
+                                    .col-md-6.col-sm-6.col-xm-6
                                         label.col-form-label(for='inputCodigo') Valor Total
                                         .input-group
                                             .input-group-prepend
@@ -80,21 +81,145 @@ block content
                     nav.m-0
                         ul.pagination.justify-content-center(id='paginacao').m-0
                 
-                script. 
+                
+
+            .card.mx-2.shadow.card-pdv
+                form(action="/pdv/venda", method="post", id="frm")   
+                    .card-header.bg-danger  
+                        i.fas.fa-cart-plus 
+                        span    Nota       
+                    .card-body.p-0
+                        //.input-group.mb-2   
+                            input.form-control(type='text', placeholder="Cliente", aria-describedby='button-addon1' )
+                            div.input-group-append(id='button-addon1')
+                                button.btn.btn-outline-secondary(type='button')
+                                    i.fas.fa-search
+                                button.btn.btn-outline-secondary(type='button')
+                                    i.fas.fa-plus
+                        .row.align-text-left.m-0
+                            .col-2
+                                .row.bg-secondary.text-white.pl-2
+                                    span ID:
+                                .row.pl-2    
+                                    span(id="idClienteVenda", name="idClienteVenda") 
+                            .col-8
+                                .row.bg-secondary.text-white
+                                    span CLIENTE:
+                                .row    
+                                    span(id="nomeClienteVenda", name="nomeClienteVenda") 
+                            .col-2.p-0.m-0
+                                button.btn.border.border-dark.btn-secondary.btn-block.btn-lg.rounded-0(type='button',data-toggle='modal', data-target='#modalProcuraCliente')
+                                        i.fas.fa-search  
+                            
+                            div(class='modal fade', id='modalProcuraCliente', role='dialog')
+                                            include ./modals/procuraCliente.pug
+                                        
+                        .row.m-0
+                            .table-responsive.mt-0(style="overflow: auto; height: 26.5rem;")
+                                table.display.compact.mt-0(id='tabelaVenda' )
+                                    thead.bg-secondary.text-white.mt-0
+                                        tr
+                                            th(scope="col") ID
+                                            th(scope="col") Produto
+                                            th(scope="col") Qtd
+                                            th(scope="col") Val. Tt.
+                                            th(scole="col") 
+                                    tbody
+                    .card-footer.p-0
+                        .row
+                            .col-6
+                                span.h4 Total: 
+                            .col-6.bg-secondary
+                                span.h4.text-light R$ 
+                                    span(id='valorVenda',name='valorVenda') 0,00
+                        .row.p-0
+                            .col-12
+                                button.btn.btn-danger.btn-block.rounded-0(type="button",id="buttonFinalizar",data-toggle='modal', data-target='#aquieomodal' ) Finalizar Venda
+                        .container
+                            div(class='modal fade', id="aquieomodal", role='dialog')
+                                include ./modals/finalizaVenda.pug
+            script. 
                     $(document).ready(function(){
+
+                       
                         
+                        
+                        
+                        var tabelaVenda = $("#tabelaVenda").DataTable({
+                            
+                            
+                           
+                            "language": {
+                                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                            },
+                            "createdRow": function ( row, data, index ) {
+                                    $('td', row).eq(3).addClass('valor');
+                                    $('td', row).eq(4).addClass('btn btn-danger rounded-0 m-0 deleteLinha');
+                                    $('td', row).eq(4).attr('id', 'buttonDeleteLinha' );
+                                    $('td', row).eq(4).append('<i class="fas fa-minus-circle"/>');
+                                    
+                            },
+                            searching: false,
+                            paging: false,
+                            info: false,
+                            ordering: false
+                        
+                        });
+
+                        $('#fim').click(function(){
+                            alert("opa");
+                            var linhas=array();
+                            var cont = 0;
+                            tabelaVenda.data().each( function (d) {
+                                linhas.push(tabelaVenda.row(cont).data());
+                                cont++;
+                            } );
+
+                            var data = tabelaVenda.serializeArray();
+                            alert("opa"+data);
+                            $.post("/pdv/venda", {"tabela": JSON.stringify(linhas)});
+                            alert("opa");
+                        });
+                        $('#tabelaVenda').on('click','tbody tr td.deleteLinha', function(){
+                            
+                            var a = $(this).parents('tr').children('td.valor');
+                            var valor = tabelaVenda.cell(a).data();
+                            
+                            valor = valor.toString().replace(',','.');
+                           
+                            valor = parseFloat(valor);
+                            
+                            var total = $("#valorVenda").text();
+                            
+                            total = total.replace(',','.');
+                            
+                            total = parseFloat(total);
+                            
+                            total = total - valor;
+                            
+                            $("#valorVenda").html(total.toFixed(2).toString().replace('.',','));                        
+                            tabelaVenda.row( $(this).parents('tr') ).remove().draw();
+                        });
 
                         $('#buttonAdicionar').click(function(){
-                            var nome, qtd, val, itemTabela;
+                            var nome, qtd, val, itemTabela, id;
+                            id = $("#inputCodigo").val();
                             nome = $("#label-produto").text();
                             qtd = $("#inputQuantidade").val();
                             val = $("#inputValorTotal").val();
 
-                            itemTabela = '<tr><td>'+nome+'</td><td>'+qtd+'</td><td>'+val+'</td></tr>';
+                            tabelaVenda.row.add([
+                                id,
+                                nome,
+                                qtd,
+                                val,
+                                ""
+                            ]).draw(false);
 
-                            $('#tabelaVenda').append(itemTabela);
+                            val = parseFloat(val.replace(',','.')) + parseFloat($("#valorVenda").text().replace(',','.'));
+                            $("#valorVenda").html(val.toFixed(2).toString().replace('.',','));
 
-                        })
+                         })
 
                         $('.btn.cardProduto').click(function(){
                             var aux = $(this).data("detalhes");
@@ -111,9 +236,13 @@ block content
                             $("#inputValorTotal").attr('value',aux.preco);
 
                         });
+
+                       
                         
                         buscaProdutos(1);
                     });
+
+                    
 
                     function calculaQuantidade(){
                         var desc = parseFloat(($("#inputDesconto").val()).replace(',','.'));
@@ -121,8 +250,8 @@ block content
 
                         var unit = $("#inputValorUnit").val();
                         var val = unit*quant - desc;
-
-                        $("#inputValorTotal").attr('value',val.toString().replace('.',','));
+                        
+                        $("#inputValorTotal").attr('value',val.toFixed(2).toString().replace('.',','));
                     }
 
                     function calculaDesconto(){
@@ -132,7 +261,8 @@ block content
                         var unit = $("#inputValorUnit").val();
                         var val = unit*quant - desc;
 
-                        $("#inputValorTotal").attr('value',val.toString().replace('.',','));
+                        
+                        $("#inputValorTotal").attr('value',val.toFixed(2).toString().replace('.',','));
                     }
 
                     function passaDados(aux){
@@ -263,36 +393,6 @@ block content
                         
 
                         ajustaBotoes();
-                    }
-
-            .card.mx-2.shadow.card-pdv   
-                .card-header.bg-danger  
-                    i.fas.fa-cart-plus 
-                    span    Nota       
-                .card-body
-                    .input-group.mb-2   
-                        input.form-control(type='text', placeholder="Cliente", aria-describedby='button-addon1' )
-                        div.input-group-append(id='button-addon1')
-                            button.btn.btn-outline-secondary(type='button')
-                                i.fas.fa-search
-                            button.btn.btn-outline-secondary(type='button')
-                                i.fas.fa-plus
-                    .row.border.p-0
-                        table.table.table-striped.table-sm.border-left.border-right.m-0
-                            thead
-                                    tr
-                                        th(scope="col") Produto
-                                        th(scope="col") Qtd
-                                        th(scope="col") Val. Tt.
-                        .table-responsive(style="overflow: auto; height: 350px;")
-                            table.table.table-striped.table-sm.border-left.border-right
-                                tbody(id='tabelaVenda' )
-                .card-footer.p-0
-                    .row
-                        .col-6
-                            span.h4 Total: 
-                        .col-6.bg-dark
-                            span.h4.text-light R$ 150,00
-                    .row.p-0
-                        .col-12
-                            button.btn.btn-danger.btn-block.rounded-0(id='buttonFinalizar') Finalizar Venda
+                    }                
+                    
+                        

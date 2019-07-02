@@ -1,0 +1,23 @@
+.modal-dialog.modal-dialog-centered.modal-xl 
+    .modal-content
+        form(action="/pagamento/register", method="post")
+            .modal-header
+                h3 Nova forma de pagamento
+                button(type='button', class='close', data-dismiss='modal') &times;
+                include ../messages/messages.pug 
+            .modal-body
+                .container-fluid
+                    .row   
+                        .form-group.col-sm-2.my-0
+                            label.col-form-label ID
+                            input(type='text', class='form-control', name='ID', readonly)
+                        .form-group.col-sm-8.my-0
+                            label.col-form-label Descrição
+                            input(type='text', class='form-control',  name='descricao')
+                        .form-group.col-sm-2.px-6.my-0
+                            label.col-form-label Parcelas 
+                            input(type='text', class='form-control', name='parcelas')
+                    
+            .modal-footer
+                button(type='submit', class='form-control btn btn-success ml-3 mr-sm-1') Salvar  
+                button(type='button', class='btn btn-danger mr-3 ml-sm-auto' , data-dismiss='modal') Close

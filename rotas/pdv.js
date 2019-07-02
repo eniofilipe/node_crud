@@ -6,21 +6,39 @@ const {ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 router.get('/view', ensureAuthenticated, (req, res) => { 
     
     let queryProdutos = "SELECT * FROM `produtos` ORDER BY id ASC"; // query database to get all the players
+    let queryClientes = "SELECT * FROM `clientes` ORDER BY id ASC";
+    let queryPagamentos = "SELECT * FROM `pagamento` ORDER BY idpagamento ASC";
     // execute query
+    var resultadoPagamentos;
     var resultadoProdutos;
-    con.query(queryProdutos, (err, result) => {
-        resultadoProdutos=result;
-        res.render('pdv', {
-            tabela: resultadoProdutos,
-            usuario: userDisplay
-        });
+    con.query(queryPagamentos, (err,result) =>{
+        resultadoPagamentos = result;
+        con.query(queryProdutos, (err, result) => {
+            resultadoProdutos=result;
+            con.query(queryClientes, (err, result) => {
     
+                res.render('pdv', {
+                    tabelaClientes : result,
+                    tabela: resultadoProdutos,
+                    selecPagamentos: resultadoPagamentos,
+                    usuario: userDisplay
+                });
+            
+            });
+            
+        
+        });
     });
+    
     
     
         
    
            
+});
+
+router.post('/venda', (req, res) => {
+    console.log(req.body);
 });
 
 /*router.get('/delete/:id', (req, res)=>{
